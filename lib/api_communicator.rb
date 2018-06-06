@@ -25,15 +25,19 @@ def get_character_movies_from_api(character)
     count = 1
     while char_found == nil
       char_found = search_page_for_character(character_hash, character)
-      if char_found != nil
+      if char_found
           puts "found character"
           break
       end
       puts "not found in page #{count}...checking next page #{count + 1}"
       count += 1
       next_page = get_next_page(character_hash)
+      if(!next_page) then break end
       character_hash = fetch_readable_api_data(next_page)
-      binding.pry
+    end
+
+    if char_found == nil
+      puts "character not found, please try again"
     end
 
 
